@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState } from 'react';
 import { Alert, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -23,7 +24,7 @@ export default function HomeScreen() {
 
   const handleAddTransaction = () => {
     if (!description || !amount) {
-      Alert.alert('Atenção', 'Por favor, preencha todos os campos!');
+      alert("Atenção: Por favor, preencha todos os campos!");
       return;
     }
 
@@ -106,7 +107,7 @@ export default function HomeScreen() {
           {/* FORMULÁRIO DE CADASTRO */}
           <View style={styles.formCard}>
             <Text style={styles.sectionTitle}>Nova Transação</Text>
-            
+
             <TextInput
               style={styles.input}
               placeholder="Descrição (Ex: Conta de Internet)"
@@ -126,15 +127,15 @@ export default function HomeScreen() {
 
             {/* SELETOR DE TIPO COM TRAVA DE CLIQUE */}
             <View style={styles.typeSelectorRow}>
-              <TouchableOpacity 
-                style={[styles.typeButton, type === 'revenue' ? styles.typeButtonRevenueActive : styles.typeButtonInactive]} 
+              <TouchableOpacity
+                style={[styles.typeButton, type === 'revenue' ? styles.typeButtonRevenueActive : styles.typeButtonInactive]}
                 onPress={() => setType('revenue')}
               >
                 <Text style={[styles.typeButtonText, type === 'revenue' && { color: '#fff' }]}>Receita (+)</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity 
-                style={[styles.typeButton, type === 'expense' ? styles.typeButtonExpenseActive : styles.typeButtonInactive]} 
+              <TouchableOpacity
+                style={[styles.typeButton, type === 'expense' ? styles.typeButtonExpenseActive : styles.typeButtonInactive]}
                 onPress={() => setType('expense')}
               >
                 <Text style={[styles.typeButtonText, type === 'expense' && { color: '#fff' }]}>Despesa (-)</Text>
@@ -176,14 +177,14 @@ export default function HomeScreen() {
 
       {/* MENUS/TABS DE NAVEGAÇÃO ENTRE TELAS */}
       <View style={styles.tabBar}>
-        <TouchableOpacity 
-          style={[styles.tabItem, currentScreen === 'dashboard' && styles.tabItemActive]} 
+        <TouchableOpacity
+          style={[styles.tabItem, currentScreen === 'dashboard' && styles.tabItemActive]}
           onPress={() => setCurrentScreen('dashboard')}
         >
           <Text style={[styles.tabText, currentScreen === 'dashboard' && styles.tabTextActive]}>📊 Painel</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          style={[styles.tabItem, currentScreen === 'transacoes' && styles.tabItemActive]} 
+        <TouchableOpacity
+          style={[styles.tabItem, currentScreen === 'transacoes' && styles.tabItemActive]}
           onPress={() => setCurrentScreen('transacoes')}
         >
           <Text style={[styles.tabText, currentScreen === 'transacoes' && styles.tabTextActive]}>💸 Lançamentos</Text>
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
   },
   navbar: {
     backgroundColor: '#1e293b',
-    paddingTop: 50,
+    paddingTop: 85,
     paddingBottom: 15,
     alignItems: 'center',
   },

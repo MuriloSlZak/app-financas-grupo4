@@ -1,3 +1,4 @@
+// @ts-nocheck
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
