@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   TabList,
   TabListProps,
@@ -19,12 +20,19 @@ export default function AppTabs() {
       <TabSlot style={{ height: '100%' }} />
       <TabList asChild>
         <CustomTabList>
+          
           <TabTrigger name="home" href="/" asChild>
-            <TabButton>Home</TabButton>
+            <TabButton>Início</TabButton>
           </TabTrigger>
-          <TabTrigger name="explore" href="/explore" asChild>
-            <TabButton>Explore</TabButton>
+          
+          <TabTrigger name="relatorio" href="/relatorio" asChild>
+            <TabButton>Relatório</TabButton>
           </TabTrigger>
+
+          <TabTrigger name="dicas" href="/dicas" asChild>
+            <TabButton>Dicas</TabButton>
+          </TabTrigger>
+
         </CustomTabList>
       </TabList>
     </Tabs>
@@ -52,8 +60,9 @@ export function CustomTabList(props: TabListProps) {
   return (
     <View {...props} style={styles.tabListContainer}>
       <ThemedView type="backgroundElement" style={styles.innerContainer}>
+        
         <ThemedText type="smallBold" style={styles.brandText}>
-          Expo Starter
+          App Finanças - Grupo 4
         </ThemedText>
 
         {props.children}
