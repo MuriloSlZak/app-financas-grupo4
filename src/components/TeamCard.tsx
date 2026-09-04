@@ -5,8 +5,8 @@ export default function TeamCard() {
     <View style={styles.cardTeam}>
       <Text style={styles.cardTitleTeam}>👨‍💻 Sobre o App</Text>
       <Text style={styles.textTeam}>
-        Desenvolvido com dedicação pelo Grupo 4 (Murilo, Ruan e Bianca) para ajudar você a alcançar
-        a liberdade financeira!
+        Desenvolvido com dedicação pelo Grupo 4 (Murilo e Ruan) para ajudar você a alcançar a
+        liberdade financeira!
       </Text>
     </View>
   );
