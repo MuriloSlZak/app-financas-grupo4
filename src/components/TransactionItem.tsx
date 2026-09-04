@@ -1,22 +1,26 @@
-// @ts-nocheck
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function TransactionItem({ item, onTogglePaid }) {
+import { Transaction } from '@/context/TransactionContext';
+
+interface TransactionItemProps {
+  item: Transaction;
+  onTogglePaid: (id: string) => void;
+}
+
+export default function TransactionItem({ item, onTogglePaid }: TransactionItemProps) {
   return (
     <View style={styles.transactionItem}>
       <View style={{ flex: 1 }}>
         <Text style={styles.itemDescription}>{item.description}</Text>
-        <Text style={[styles.itemAmount, { color: item.type === 'revenue' ? '#2ecc71' : '#e74c3c' }]}>
+        <Text
+          style={[styles.itemAmount, { color: item.type === 'revenue' ? '#2ecc71' : '#e74c3c' }]}>
           {item.type === 'revenue' ? '+' : '-'} R$ {item.amount.toFixed(2)}
         </Text>
       </View>
       <TouchableOpacity
         style={[styles.paidButton, item.paid ? styles.paidButtonTrue : styles.paidButtonFalse]}
-        onPress={() => onTogglePaid(item.id)}
-      >
-        <Text style={styles.paidButtonText}>
-          {item.paid ? 'Pago ✓' : 'Pendente'}
-        </Text>
+        onPress={() => onTogglePaid(item.id)}>
+        <Text style={styles.paidButtonText}>{item.paid ? 'Pago ✓' : 'Pendente'}</Text>
       </TouchableOpacity>
     </View>
   );

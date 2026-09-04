@@ -1,42 +1,43 @@
-// @ts-nocheck
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { useColorScheme } from 'react-native';
-import React, { createContext, useState } from 'react';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
+import { TransactionProvider } from '@/context/TransactionContext';
 
-// Criando a memória aqui dentro do layout
-export const TransactionContext = createContext<any>(null);
-
-export default function TabLayout() {
+export default function RootLayout() {
   const colorScheme = useColorScheme();
-  
-  // A lista de contas fica salva aqui no layout
-  const [transactions, setTransactions] = useState([
-    { id: '1', description: 'Salário', amount: 2500, type: 'revenue', paid: true },
-    { id: '2', description: 'Aluguel', amount: 1000, type: 'expense', paid: true },
-    { id: '3', description: 'Conta de Luz', amount: 250, type: 'expense', paid: false },
-  ]);
-
-  const addTransaction = (newTransaction: any) => {
-    setTransactions((prev) => [...prev, newTransaction]);
-  };
-
-  const togglePaid = (id: string) => {
-    setTransactions((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, paid: !item.paid } : item
-      )
-    );
-  };
 
   return (
-    <TransactionContext.Provider value={{ transactions, addTransaction, togglePaid }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <AnimatedSplashOverlay />
-        <AppTabs />
-      </ThemeProvider>
-    </TransactionContext.Provider>
+    <AuthProvider>
+      <TransactionProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <AnimatedSplashOverlay />
+          <RootStack />
+        </ThemeProvider>
+      </TransactionProvider>
+    </AuthProvider>
+  );
+}
+
+function RootStack() {
+  const { user, initializing } = useAuth();
+
+  // Enquanto o Firebase verifica se já existe alguém logado, não mostra nada
+  // (a splash animada ainda está cobrindo a tela nesse momento).
+  if (initializing) {
+    return null;
+  }
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={!user}>
+        <Stack.Screen name="login" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!!user}>
+        <Stack.Screen name="(tabs)" />
+      </Stack.Protected>
+    </Stack>
   );
 }

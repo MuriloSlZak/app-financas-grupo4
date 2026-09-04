@@ -1,7 +1,10 @@
-// @ts-nocheck
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-export default function BalanceCard({ balance }) {
+interface BalanceCardProps {
+  balance: number;
+}
+
+export default function BalanceCard({ balance }: BalanceCardProps) {
   return (
     <View style={styles.balanceCard}>
       <Text style={styles.balanceLabel}>Saldo Geral Disponível</Text>

@@ -1,13 +1,22 @@
-// @ts-nocheck
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function Navbar({ currentScreen }) {
+interface NavbarProps {
+  currentScreen: 'dashboard' | 'transacoes';
+  onLogout?: () => void;
+}
+
+export default function Navbar({ currentScreen, onLogout }: NavbarProps) {
   return (
     <View style={styles.navbar}>
       <Text style={styles.navbarText}>Controle Financeiro 💰</Text>
       <Text style={styles.navbarSubtext}>
         {currentScreen === 'dashboard' ? 'Painel de Gráficos' : 'Histórico & Cadastro'}
       </Text>
+      {onLogout && (
+        <TouchableOpacity style={styles.logoutButton} onPress={onLogout}>
+          <Text style={styles.logoutText}>Sair ⏻</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -28,5 +37,19 @@ const styles = StyleSheet.create({
     color: '#94a3b8',
     fontSize: 12,
     marginTop: 2,
+  },
+  logoutButton: {
+    position: 'absolute',
+    right: 15,
+    bottom: 15,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    backgroundColor: '#334155',
+  },
+  logoutText: {
+    color: '#e2e8f0',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 });
