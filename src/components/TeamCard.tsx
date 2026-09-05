@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { UI } from '@/constants/ui';
+
 export default function TeamCard() {
   return (
     <View style={styles.cardTeam}>
@@ -14,27 +16,25 @@ export default function TeamCard() {
 
 const styles = StyleSheet.create({
   cardTeam: {
-    backgroundColor: '#2C3E50', // Fundo escuro para destacar a equipe
+    backgroundColor: UI.colors.dark, // Fundo escuro para destacar a equipe
     padding: 20,
-    borderRadius: 15,
+    borderRadius: UI.radius.lg,
+    marginTop: 6,
     marginBottom: 30,
     width: '100%',
-    maxWidth: 400,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 4,
+    maxWidth: 420,
+    ...UI.shadow,
+    shadowOpacity: 0.15,
   },
   cardTitleTeam: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '800',
+    color: UI.colors.onDark,
     marginBottom: 8,
   },
   textTeam: {
     fontSize: 14,
-    color: '#D5D8DC',
+    color: UI.colors.onDarkMuted,
     lineHeight: 22,
   },
 });

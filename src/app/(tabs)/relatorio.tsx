@@ -1,30 +1,43 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 
 import ShareStatusCard from '@/components/ShareStatusCard';
+import { UI } from '@/constants/ui';
 import { useTransactions } from '@/context/TransactionContext';
 
 export default function RelatorioScreen() {
   const { balance } = useTransactions();
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.screen} contentContainerStyle={styles.container}>
       <Text style={styles.title}>Status Financeiro 📑</Text>
-      <Text style={styles.subtitle}>Compartilhe o seu resultado</Text>
+      <Text style={styles.subtitle}>Veja como estão suas contas e compartilhe o resultado</Text>
 
       <ShareStatusCard balance={balance} />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: UI.colors.bg },
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
-    backgroundColor: '#f8f9fa',
+    paddingTop: 90,
+    paddingBottom: 60,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 80,
   },
-  title: { fontSize: 26, fontWeight: 'bold', color: '#1e293b', marginBottom: 5 },
-  subtitle: { fontSize: 15, color: '#64748b', marginBottom: 30 },
+  title: {
+    fontSize: 26,
+    fontWeight: '800',
+    color: UI.colors.text,
+    marginBottom: 6,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 15,
+    color: UI.colors.textSecondary,
+    marginBottom: 24,
+    textAlign: 'center',
+    maxWidth: 320,
+  },
 });

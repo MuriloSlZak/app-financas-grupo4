@@ -2,10 +2,11 @@ import { ScrollView, StyleSheet, Text } from 'react-native';
 
 import TeamCard from '@/components/TeamCard';
 import TipCard from '@/components/TipCard';
+import { UI } from '@/constants/ui';
 
 export default function DicasScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView style={styles.screen} contentContainerStyle={styles.container}>
       <Text style={styles.title}>Dicas Financeiras 💡</Text>
       <Text style={styles.subtitle}>Aprenda a cuidar do seu dinheiro</Text>
 
@@ -30,24 +31,25 @@ export default function DicasScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: UI.colors.bg },
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: '#F5F7FA', // Fundo cinza clarinho elegante
+    paddingTop: 90, // Dá o espaço do topo para não ficar cortado
+    paddingBottom: 60,
     alignItems: 'center',
-    paddingTop: 60, // Dá o espaço do topo para não ficar cortado
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#1E293B',
-    marginBottom: 5,
+    fontSize: 26,
+    fontWeight: '800',
+    color: UI.colors.text,
+    marginBottom: 6,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
-    color: '#64748B',
-    marginBottom: 30,
+    fontSize: 15,
+    color: UI.colors.textSecondary,
+    marginBottom: 24,
     textAlign: 'center',
   },
 });

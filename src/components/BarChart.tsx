@@ -1,28 +1,48 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { UI } from '@/constants/ui';
+import { formatBRL } from '@/utils/format';
+
 interface BarChartProps {
   totalRevenue: number;
   totalExpense: number;
 }
 
+const TRACK_HEIGHT = 130;
+
 export default function BarChart({ totalRevenue, totalExpense }: BarChartProps) {
   const maxAmount = Math.max(totalRevenue, totalExpense, 1);
-  const revenueBarHeight = (totalRevenue / maxAmount) * 120;
-  const expenseBarHeight = (totalExpense / maxAmount) * 120;
+  const revenueBarHeight = (totalRevenue / maxAmount) * TRACK_HEIGHT;
+  const expenseBarHeight = (totalExpense / maxAmount) * TRACK_HEIGHT;
 
   return (
     <View style={styles.chartCard}>
       <Text style={styles.sectionTitle}>Resumo Visual Financeiro</Text>
+      <Text style={styles.sectionSubtitle}>Receitas x despesas do período</Text>
+
       <View style={styles.chartRow}>
         <View style={styles.barColumn}>
-          <View style={[styles.bar, { height: revenueBarHeight, backgroundColor: '#2ecc71' }]} />
+          <View style={styles.barTrack}>
+            <View
+              style={[styles.bar, { height: revenueBarHeight, backgroundColor: UI.colors.success }]}
+            />
+          </View>
           <Text style={styles.barLabel}>Receitas</Text>
-          <Text style={styles.barValue}>R$ {totalRevenue.toFixed(2)}</Text>
+          <Text style={[styles.barValue, { color: UI.colors.success }]}>
+            {formatBRL(totalRevenue)}
+          </Text>
         </View>
+
         <View style={styles.barColumn}>
-          <View style={[styles.bar, { height: expenseBarHeight, backgroundColor: '#e74c3c' }]} />
+          <View style={styles.barTrack}>
+            <View
+              style={[styles.bar, { height: expenseBarHeight, backgroundColor: UI.colors.danger }]}
+            />
+          </View>
           <Text style={styles.barLabel}>Despesas</Text>
-          <Text style={styles.barValue}>R$ {totalExpense.toFixed(2)}</Text>
+          <Text style={[styles.barValue, { color: UI.colors.danger }]}>
+            {formatBRL(totalExpense)}
+          </Text>
         </View>
       </View>
     </View>
@@ -31,23 +51,32 @@ export default function BarChart({ totalRevenue, totalExpense }: BarChartProps) 
 
 const styles = StyleSheet.create({
   chartCard: {
-    backgroundColor: '#fff',
+    backgroundColor: UI.colors.card,
     padding: 20,
-    borderRadius: 12,
-    marginBottom: 20,
+    borderRadius: UI.radius.lg,
+    marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: UI.colors.border,
+    ...UI.shadow,
   },
+  sectionTitle: { fontSize: 16, fontWeight: '800', color: UI.colors.text },
+  sectionSubtitle: { fontSize: 12, color: UI.colors.textSecondary, marginTop: 2 },
   chartRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'flex-end',
-    height: 160,
-    marginTop: 15,
+    marginTop: 18,
   },
-  barColumn: { alignItems: 'center', width: 110 },
-  bar: { width: 40, borderRadius: 6, minHeight: 5 },
-  barLabel: { fontSize: 13, fontWeight: '600', color: '#334155', marginTop: 8 },
-  barValue: { fontSize: 12, color: '#64748b', marginTop: 2 },
-  sectionTitle: { fontSize: 16, fontWeight: 'bold', color: '#1e293b', marginBottom: 10 },
+  barColumn: { alignItems: 'center', width: 120 },
+  barTrack: {
+    height: TRACK_HEIGHT,
+    width: 56,
+    borderRadius: 12,
+    backgroundColor: UI.colors.bg,
+    justifyContent: 'flex-end',
+    overflow: 'hidden',
+  },
+  bar: { width: '100%', borderRadius: 12, minHeight: 6 },
+  barLabel: { fontSize: 13, fontWeight: '700', color: UI.colors.text, marginTop: 10 },
+  barValue: { fontSize: 13, fontWeight: '700', marginTop: 2 },
 });

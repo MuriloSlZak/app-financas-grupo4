@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+import { UI } from '@/constants/ui';
 import { NewTransaction } from '@/context/TransactionContext';
 import { notify } from '@/utils/notify';
 
@@ -33,20 +34,27 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
     notify('Sucesso', 'Transação adicionada com sucesso!');
   };
 
+  const isRevenue = type === 'revenue';
+
   return (
     <View style={styles.formCard}>
       <Text style={styles.sectionTitle}>Nova Transação</Text>
+      <Text style={styles.sectionSubtitle}>Registre uma receita ou uma despesa</Text>
+
+      <Text style={styles.label}>Descrição</Text>
       <TextInput
         style={styles.input}
-        placeholder="Descrição"
-        placeholderTextColor="#999"
+        placeholder="Ex.: Conta de luz"
+        placeholderTextColor="#94a3b8"
         value={description}
         onChangeText={setDescription}
       />
+
+      <Text style={styles.label}>Valor (R$)</Text>
       <TextInput
         style={styles.input}
-        placeholder="Valor"
-        placeholderTextColor="#999"
+        placeholder="0,00"
+        placeholderTextColor="#94a3b8"
         keyboardType="numeric"
         value={amount}
         onChangeText={setAmount}
@@ -54,29 +62,25 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
 
       <View style={styles.typeSelectorRow}>
         <TouchableOpacity
-          style={[
-            styles.typeButton,
-            type === 'revenue' ? styles.typeButtonRevenueActive : styles.typeButtonInactive,
-          ]}
-          onPress={() => setType('revenue')}>
-          <Text style={[styles.typeButtonText, type === 'revenue' && styles.typeButtonTextActive]}>
-            Receita (+)
+          style={[styles.typeButton, isRevenue ? styles.typeButtonRevenueActive : styles.typeButtonInactive]}
+          onPress={() => setType('revenue')}
+          activeOpacity={0.8}>
+          <Text style={[styles.typeButtonText, isRevenue && { color: UI.colors.success }]}>
+            ▲ Receita
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            styles.typeButton,
-            type === 'expense' ? styles.typeButtonExpenseActive : styles.typeButtonInactive,
-          ]}
-          onPress={() => setType('expense')}>
-          <Text style={[styles.typeButtonText, type === 'expense' && styles.typeButtonTextActive]}>
-            Despesa (-)
+          style={[styles.typeButton, !isRevenue ? styles.typeButtonExpenseActive : styles.typeButtonInactive]}
+          onPress={() => setType('expense')}
+          activeOpacity={0.8}>
+          <Text style={[styles.typeButtonText, !isRevenue && { color: UI.colors.danger }]}>
+            ▼ Despesa
           </Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-        <Text style={styles.submitButtonText}>Salvar Lançamento</Text>
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} activeOpacity={0.85}>
+        <Text style={styles.submitButtonText}>Salvar lançamento</Text>
       </TouchableOpacity>
     </View>
   );
@@ -84,30 +88,51 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
 
 const styles = StyleSheet.create({
   formCard: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 12,
+    backgroundColor: UI.colors.card,
+    padding: 20,
+    borderRadius: UI.radius.lg,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: UI.colors.border,
+    ...UI.shadow,
   },
-  sectionTitle: { fontSize: 16, fontWeight: 'bold', color: '#1e293b', marginBottom: 10 },
+  sectionTitle: { fontSize: 16, fontWeight: '800', color: UI.colors.text },
+  sectionSubtitle: { fontSize: 12, color: UI.colors.textSecondary, marginTop: 2, marginBottom: 16 },
+  label: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: UI.colors.textSecondary,
+    marginBottom: 6,
+    marginLeft: 2,
+  },
   input: {
+    backgroundColor: UI.colors.inputBg,
     borderWidth: 1,
-    borderColor: '#cbd5e1',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 14,
-    marginBottom: 12,
-    color: '#334155',
+    borderColor: UI.colors.border,
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    fontSize: 15,
+    marginBottom: 14,
+    color: UI.colors.text,
   },
-  typeSelectorRow: { flexDirection: 'row', marginBottom: 15 },
-  typeButton: { flex: 1, padding: 12, borderRadius: 8, alignItems: 'center', marginHorizontal: 5 },
-  typeButtonInactive: { backgroundColor: '#f1f5f9' },
-  typeButtonRevenueActive: { backgroundColor: '#2ecc71' },
-  typeButtonExpenseActive: { backgroundColor: '#e74c3c' },
-  typeButtonText: { fontWeight: 'bold', color: '#475569' },
-  typeButtonTextActive: { color: '#fff' },
-  submitButton: { backgroundColor: '#3b82f6', padding: 14, borderRadius: 8, alignItems: 'center' },
-  submitButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 15 },
+  typeSelectorRow: { flexDirection: 'row', gap: 10, marginBottom: 16 },
+  typeButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: 'center',
+    borderWidth: 1,
+  },
+  typeButtonInactive: { backgroundColor: UI.colors.inputBg, borderColor: UI.colors.border },
+  typeButtonRevenueActive: { backgroundColor: UI.colors.successSoft, borderColor: UI.colors.success },
+  typeButtonExpenseActive: { backgroundColor: UI.colors.dangerSoft, borderColor: UI.colors.danger },
+  typeButtonText: { fontWeight: '700', color: UI.colors.textSecondary },
+  submitButton: {
+    backgroundColor: UI.colors.primary,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  submitButtonText: { color: '#fff', fontWeight: '700', fontSize: 15 },
 });

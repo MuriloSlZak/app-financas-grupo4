@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import TransactionForm from '@/components/TransactionForm';
 import TransactionList from '@/components/TransactionList';
+import { UI } from '@/constants/ui';
 import { useAuth } from '@/context/AuthContext';
 import { useTransactions } from '@/context/TransactionContext';
 
@@ -27,8 +28,9 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={styles.shortcutButton}
-            onPress={() => setCurrentScreen('transacoes')}>
-            <Text style={styles.shortcutButtonText}>Ver Transações ➔</Text>
+            onPress={() => setCurrentScreen('transacoes')}
+            activeOpacity={0.85}>
+            <Text style={styles.shortcutButtonText}>Ver transações ➔</Text>
           </TouchableOpacity>
         </ScrollView>
       ) : (
@@ -44,14 +46,20 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8f9fa' },
-  scrollContent: { padding: 20, paddingBottom: 140 },
-  shortcutButton: {
-    backgroundColor: '#e2e8f0',
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 10,
+  container: { flex: 1, backgroundColor: UI.colors.bg },
+  scrollContent: {
+    padding: 20,
+    paddingBottom: 140,
+    width: '100%',
+    maxWidth: 560,
+    alignSelf: 'center',
   },
-  shortcutButtonText: { color: '#3b82f6', fontWeight: 'bold' },
+  shortcutButton: {
+    backgroundColor: UI.colors.primarySoft,
+    paddingVertical: 15,
+    borderRadius: UI.radius.md,
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  shortcutButtonText: { color: UI.colors.primary, fontWeight: '700', fontSize: 15 },
 });

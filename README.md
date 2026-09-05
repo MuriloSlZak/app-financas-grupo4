@@ -2,6 +2,34 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Publicar o site (Firebase Hosting)
+
+O site vai ao ar **somente** pelo Firebase Hosting (projeto `grupofourappfinancas`), não pelo GitHub Pages:
+
+- https://grupofourappfinancas.web.app
+
+Primeira vez na máquina:
+
+```bash
+npm install
+npm install -g firebase-tools
+firebase login
+```
+
+Para publicar (exporta a versão web para `dist/` e envia para o Hosting):
+
+```bash
+npm run deploy
+```
+
+No Windows, sem terminal, dá para usar os atalhos de dois cliques na raiz do projeto:
+
+- `publicar.cmd` — publica o site no Firebase Hosting
+- `salvar-no-github.cmd` — salva as mudanças no GitHub (branch `main`)
+- `atualizar-tudo.cmd` — faz os dois de uma vez
+
+A configuração do Hosting fica em `firebase.json` e o projeto em `.firebaserc`.
+
 ## Get started
 
 1. Install dependencies

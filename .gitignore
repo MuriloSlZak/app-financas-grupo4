@@ -9,6 +9,13 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Firebase (cache do CLI e logs de deploy)
+.firebase/
+firebase-debug.log*
+ui-debug.log*
+publicar.log
+mensagem-commit.txt
+
 # Native
 .kotlin/
 *.orig.*

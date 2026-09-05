@@ -90,6 +90,12 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     gap: Spacing.two,
     maxWidth: MaxContentWidth,
+    borderWidth: 1,
+    borderColor: 'rgba(15, 23, 42, 0.08)',
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
   },
   brandText: {
     marginRight: 'auto',
@@ -109,4 +115,4 @@ const styles = StyleSheet.create({
     gap: Spacing.one,
     marginLeft: Spacing.three,
   },
-});
+});

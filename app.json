@@ -31,8 +31,7 @@
       "expo-router"
     ],
     "experiments": {
-      "typedRoutes": true,
-      "baseUrl": "/app-financas-grupo4"
+      "typedRoutes": true
     }
   }
-}
+}
