@@ -7,7 +7,7 @@ import {
   TabTriggerSlotProps,
   Tabs,
 } from 'expo-router/ui';
-import { Pressable, StyleSheet, View, useColorScheme } from 'react-native';
+import { Pressable, StyleSheet, View, useColorScheme, useWindowDimensions } from 'react-native';
 
 import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
@@ -20,11 +20,11 @@ export default function AppTabs() {
       <TabSlot style={{ height: '100%' }} />
       <TabList asChild>
         <CustomTabList>
-          
+
           <TabTrigger name="home" href="/" asChild>
             <TabButton>Início</TabButton>
           </TabTrigger>
-          
+
           <TabTrigger name="relatorio" href="/relatorio" asChild>
             <TabButton>Relatório</TabButton>
           </TabTrigger>
@@ -45,7 +45,7 @@ export function TabButton({ children, isFocused, ...props }: TabTriggerSlotProps
       <ThemedView
         type={isFocused ? 'backgroundSelected' : 'backgroundElement'}
         style={styles.tabButtonView}>
-        <ThemedText type="small" themeColor={isFocused ? 'text' : 'textSecondary'}>
+        <ThemedText type="small" themeColor={isFocused ? 'text' : 'textSecondary'} numberOfLines={1}>
           {children}
         </ThemedText>
       </ThemedView>
@@ -56,14 +56,21 @@ export function TabButton({ children, isFocused, ...props }: TabTriggerSlotProps
 export function CustomTabList(props: TabListProps) {
   const scheme = useColorScheme();
   const colors = Colors[scheme === 'unspecified' ? 'light' : scheme];
+  const { width } = useWindowDimensions();
+  // Em telas estreitas (celular), esconde o nome do app para as 3 abas caberem sem cortar.
+  const showBrand = width >= 520;
 
   return (
     <View {...props} style={styles.tabListContainer}>
-      <ThemedView type="backgroundElement" style={styles.innerContainer}>
-        
-        <ThemedText type="smallBold" style={styles.brandText}>
-          App Finanças - Grupo 4
-        </ThemedText>
+      <ThemedView
+        type="backgroundElement"
+        style={[styles.innerContainer, !showBrand && styles.innerContainerCompact]}>
+
+        {showBrand ? (
+          <ThemedText type="smallBold" style={styles.brandText} numberOfLines={1}>
+            App Finanças - Grupo 4
+          </ThemedText>
+        ) : null}
 
         {props.children}
 
@@ -76,14 +83,14 @@ const styles = StyleSheet.create({
   tabListContainer: {
     position: 'absolute',
     width: '100%',
-    padding: Spacing.three,
+    padding: Spacing.two,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
   innerContainer: {
     paddingVertical: Spacing.two,
-    paddingHorizontal: Spacing.five,
+    paddingHorizontal: Spacing.three,
     borderRadius: Spacing.five,
     flexDirection: 'row',
     alignItems: 'center',
@@ -97,8 +104,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 12,
   },
+  innerContainerCompact: {
+    justifyContent: 'center',
+  },
   brandText: {
     marginRight: 'auto',
+    flexShrink: 1,
   },
   pressed: {
     opacity: 0.7,
@@ -115,4 +126,4 @@ const styles = StyleSheet.create({
     gap: Spacing.one,
     marginLeft: Spacing.three,
   },
-});
+});
